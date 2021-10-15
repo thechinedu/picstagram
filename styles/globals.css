@@ -1,3 +1,53 @@
+:root {
+  /* Typography */
+
+  --base-font-size: 1rem;
+  --typescale-ratio: 1.333;
+
+  --small: calc(var(--base-font-size) / var(--typescale-ratio));
+  --smaller: calc(var(--small) / var(--typescale-ratio));
+
+  --medium: calc(var(--base-font-size) * var(--typescale-ratio));
+
+  --large: calc(var(--medium) * var(--typescale-ratio));
+  --larger: calc(var(--large) * var(--typescale-ratio));
+  --x-large: calc(var(--larger) * var(--typescale-ratio));
+  --xx-large: calc(var(--x-large) * var(--typescale-ratio));
+
+  /* Grid & Layout primitives */
+
+  /* Colors */
+
+  --black: #262626;
+  --blue: #0095f6;
+  --off-white: #fafafa;
+  --white: #ffffff;
+
+  /* Spacing */
+
+  --space-scale: 8px;
+
+  --spacer-0: 0;
+  --spacer-1\/2: calc(var(--space-scale) / 2);
+
+  --spacer-1: var(--space-scale);
+  --spacer-2: calc(var(--space-scale) * 2);
+  --spacer-3: calc(var(--space-scale) * 3);
+  --spacer-4: calc(var(--space-scale) * 4);
+  --spacer-5: calc(var(--space-scale) * 5);
+  --spacer-6: calc(var(--space-scale) * 6);
+  --spacer-7: calc(var(--space-scale) * 7);
+  --spacer-8: calc(var(--space-scale) * 8);
+  --spacer-9: calc(var(--space-scale) * 9);
+  --spacer-10: calc(var(--space-scale) * 10);
+  --spacer-11: calc(var(--space-scale) * 11);
+  --spacer-12: calc(var(--space-scale) * 12);
+
+  /* Icons */
+
+  /* Buttons */
+}
+
 html,
 body {
   padding: 0;
