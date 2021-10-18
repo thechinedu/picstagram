@@ -1,0 +1,20 @@
+.container {
+  display: block;
+  position: relative;
+}
+
+.label {
+  color: var(--gray);
+  font-size: var(--small);
+  position: absolute;
+  top: 25%;
+  left: 5px;
+  transition-duration: 0.4s;
+}
+
+.input {
+  background-color: var(--off-white);
+  border: 1px solid var(--gray);
+  border-radius: 2px;
+  padding: var(--spacer-1) var(--spacer-1);
+}
