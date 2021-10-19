@@ -1,6 +1,7 @@
 .container {
   display: block;
   position: relative;
+  width: 270px;
 }
 
 .label {
@@ -8,7 +9,7 @@
   font-size: var(--small);
   position: absolute;
   top: 25%;
-  left: 5px;
+  left: 9px;
   transition-duration: 0.4s;
 }
 
@@ -17,4 +18,5 @@
   border: 1px solid var(--gray);
   border-radius: 2px;
   padding: var(--spacer-1) var(--spacer-1);
+  width: 100%;
 }

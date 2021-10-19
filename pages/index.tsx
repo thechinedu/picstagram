@@ -1,4 +1,4 @@
-// import styles from "@styles/Home.module.css";
+import styles from "@styles/Home.module.css";
 
 import Input from "@components/Input";
 import Logo from "@components/Logo";
@@ -15,8 +15,10 @@ const Home: NextPage = () => {
   const { email, password } = formState;
 
   return (
-    <section>
+    <section className={styles.container}>
       <Logo size="large" />
+
+      <Spacer y={4} />
 
       <form>
         <Input
@@ -38,9 +40,22 @@ const Home: NextPage = () => {
           type="password"
           value={password}
         />
+        <Spacer y={2} />
 
-        <button disabled>Log In</button>
+        <button className={styles.btn} disabled>
+          Log In
+        </button>
       </form>
+
+      <Spacer y={4} />
+
+      <a href="#">Forgotten your password?</a>
+
+      <Spacer y={10} />
+
+      <p>
+        Don&#39;t have an account? <a href="#">Sign up</a>
+      </p>
     </section>
   );
 };

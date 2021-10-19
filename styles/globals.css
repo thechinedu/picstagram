@@ -58,13 +58,18 @@ body {
   font-size: var(--base-font-size);
   background-color: var(--white);
   color: var(--black);
+  height: 100%;
 }
 
 a {
-  color: inherit;
+  color: var(--blue);
   text-decoration: none;
 }
 
 * {
   box-sizing: border-box;
+}
+
+#__next {
+  height: 100%;
 }
