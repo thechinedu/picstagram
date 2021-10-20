@@ -2,6 +2,7 @@
   display: block;
   position: relative;
   width: 270px;
+  height: 38px;
 }
 
 .label {
@@ -10,13 +11,22 @@
   position: absolute;
   top: 25%;
   left: 9px;
-  transition-duration: 0.4s;
+  transition-duration: 0.2s;
 }
 
 .input {
   background-color: var(--off-white);
-  border: 1px solid var(--gray);
+  border: 1px solid var(--lighter-gray);
   border-radius: 2px;
+  font-size: var(--small);
   padding: var(--spacer-1) var(--spacer-1);
   width: 100%;
+  height: 100%;
+}
+
+.shrunkLabel {
+  transform: scale(0.8333);
+  /* font-size: var(--smaller); */
+  transform-origin: left;
+  top: 0;
 }

@@ -5,7 +5,7 @@ type SpacerProps = {
   y?: number;
 };
 
-const numToSpacerVal = (num: number) => {
+export const numToSpacerVal = (num: number) => {
   if (num === 0.5) return `var(--spacer-1\\/2)`;
 
   return `var(--spacer-${num})`;
