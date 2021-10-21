@@ -5,13 +5,20 @@ import Input from "@components/Input";
 import Logo from "@components/Logo";
 import Spacer from "@components/Spacer";
 import { useState } from "react";
+import { object as yupObject, string as yupString } from "yup";
 
-const Signup = () => {
+const schema = yupObject().shape({
+  email: yupString().email().required(),
+  password: yupString().length(6).required(),
+});
+
+const Login = () => {
   const [formState, setFormState] = useState({
     email: "",
     password: "",
   });
   const { email, password } = formState;
+  const isValid = schema.isValidSync(formState);
 
   return (
     <section className={styles.container}>
@@ -42,7 +49,7 @@ const Signup = () => {
           />
           <Spacer y={2} />
 
-          <button className={styles.btn} disabled>
+          <button className={styles.btn} disabled={!isValid}>
             Log In
           </button>
         </form>
@@ -63,4 +70,4 @@ const Signup = () => {
   );
 };
 
-export default Signup;
+export default Login;
