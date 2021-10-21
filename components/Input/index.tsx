@@ -1,7 +1,7 @@
 import styles from "./index.module.css";
 
 import cn from "classnames";
-import { ChangeEvent, FC, HTMLInputTypeAttribute } from "react";
+import { ChangeEvent, FC, HTMLInputTypeAttribute, useState } from "react";
 
 type InputProps = {
   id: string;
@@ -11,20 +11,36 @@ type InputProps = {
   value: string;
 };
 
-const PasswordInput: FC<Omit<InputProps, "label">> = ({
-  id,
-  onChange,
-  type,
-  value,
-}) => {
+const PasswordInput: FC<
+  Omit<InputProps, "label"> & { isInputFilled: boolean }
+> = ({ id, onChange, type, value, isInputFilled }) => {
+  const [inputType, setInputType] = useState(type);
+  const action = inputType === "password" ? "Show" : "Hide";
+
+  const handleTogglePasswordReveal = () => {
+    setInputType((inputType) =>
+      inputType === "password" ? "text" : "password"
+    );
+  };
+
   return (
-    <input
-      className={styles.input}
-      id={id}
-      onChange={onChange}
-      type={type}
-      value={value}
-    />
+    <>
+      <input
+        className={styles.input}
+        id={id}
+        onChange={onChange}
+        type={inputType}
+        value={value}
+      />
+      {isInputFilled && (
+        <span
+          className={styles.passwordReveal}
+          onClick={handleTogglePasswordReveal}
+        >
+          {action}
+        </span>
+      )}
+    </>
   );
 };
 
@@ -65,6 +81,7 @@ const Input: FC<InputProps> = ({ id, label, onChange, type, value }) => {
           onChange={handleChange}
           type="password"
           value={value}
+          isInputFilled={isInputFilled}
         />
       ) : (
         <PlainInput id={id} onChange={onChange} type={type} value={value} />

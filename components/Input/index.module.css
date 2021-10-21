@@ -26,7 +26,16 @@
 
 .shrunkLabel {
   transform: scale(0.8333);
-  /* font-size: var(--smaller); */
   transform-origin: left;
   top: 0;
+}
+
+.shrunkLabel + .input {
+  padding-top: var(--spacer-2);
+}
+
+.passwordReveal {
+  position: absolute;
+  top: 22%;
+  right: 9px;
 }
