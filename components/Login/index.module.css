@@ -3,13 +3,6 @@
   text-align: center;
 }
 
-/* @media (min-width: 449px) {
-  .container {
-    background-color: var(--white);
-    padding: var(--spacer-2);
-  }
-} */
-
 .btn {
   border: 0;
   border-radius: 4px;
