@@ -2,6 +2,6 @@ import Account from "@components/Account";
 
 import type { NextPage } from "next";
 
-const Home: NextPage = () => <Account type="login" />;
+const Signup: NextPage = () => <Account type="signup" />;
 
-export default Home;
+export default Signup;

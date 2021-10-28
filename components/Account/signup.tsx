@@ -4,26 +4,32 @@ import Box from "@components/Box";
 import Input from "@components/Input";
 import Logo from "@components/Logo";
 import Spacer from "@components/Spacer";
+import Link from "next/link";
 import { useState } from "react";
 import { object as yupObject, string as yupString } from "yup";
 
 const schema = yupObject().shape({
   email: yupString().email().required(),
+  fullName: yupString().required(),
+  userName: yupString().length(3).required(),
   password: yupString().length(6).required(),
 });
 
-const Login = () => {
+const Signup = () => {
   const [formState, setFormState] = useState({
     email: "",
+    fullName: "",
+    userName: "",
     password: "",
   });
-  const { email, password } = formState;
+  const { email, fullName, userName, password } = formState;
   const isValid = schema.isValidSync(formState);
 
   return (
     <section className={styles.container}>
       <Box size={4}>
         <Logo size="large" />
+        <p>Sign up to see photos and videos from your friends</p>
 
         <Spacer y={4} />
 
@@ -32,17 +38,40 @@ const Login = () => {
             id="email-address"
             label="Email address"
             onChange={(evt) =>
-              setFormState({ password, email: evt.target.value })
+              setFormState({ ...formState, email: evt.target.value })
             }
             type="email"
             value={email}
           />
           <Spacer y={1} />
+
+          <Input
+            id="full-name"
+            label="Full Name"
+            onChange={(evt) =>
+              setFormState({ ...formState, fullName: evt.target.value })
+            }
+            type="text"
+            value={fullName}
+          />
+          <Spacer y={1} />
+
+          <Input
+            id="username"
+            label="Username"
+            onChange={(evt) =>
+              setFormState({ ...formState, userName: evt.target.value })
+            }
+            type="text"
+            value={userName}
+          />
+          <Spacer y={1} />
+
           <Input
             id="password"
             label="Password"
             onChange={(evt) =>
-              setFormState({ email, password: evt.target.value })
+              setFormState({ ...formState, password: evt.target.value })
             }
             type="password"
             value={password}
@@ -50,24 +79,20 @@ const Login = () => {
           <Spacer y={2} />
 
           <button className={styles.btn} disabled={!isValid}>
-            Log In
+            Next
           </button>
         </form>
-
-        <Spacer y={4} />
-
-        <a href="#">Forgotten your password?</a>
       </Box>
 
       <Spacer y={4} />
 
       <Box size={3}>
         <p>
-          Don&#39;t have an account? <a href="#">Sign up</a>
+          Have an account? <Link href="/">Log in</Link>
         </p>
       </Box>
     </section>
   );
 };
 
-export default Login;
+export default Signup;
