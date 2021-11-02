@@ -11,8 +11,8 @@ import { object as yupObject, string as yupString } from "yup";
 const schema = yupObject().shape({
   email: yupString().email().required(),
   fullName: yupString().required(),
-  userName: yupString().length(3).required(),
-  password: yupString().length(6).required(),
+  userName: yupString().min(3).required(),
+  password: yupString().min(6).required(),
 });
 
 const Signup = () => {
@@ -29,7 +29,9 @@ const Signup = () => {
     <section className={styles.container}>
       <Box size={4}>
         <Logo size="large" />
-        <p>Sign up to see photos and videos from your friends</p>
+        <p className={styles.msg}>
+          Sign up to see photos and videos from your friends
+        </p>
 
         <Spacer y={4} />
 

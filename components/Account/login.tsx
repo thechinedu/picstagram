@@ -10,7 +10,7 @@ import { object as yupObject, string as yupString } from "yup";
 
 const schema = yupObject().shape({
   email: yupString().email().required(),
-  password: yupString().length(6).required(),
+  password: yupString().min(6).required(),
 });
 
 const Login = () => {
