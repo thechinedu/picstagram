@@ -4,8 +4,9 @@ import Box from "@components/Box";
 import Input from "@components/Input";
 import Logo from "@components/Logo";
 import Spacer from "@components/Spacer";
+import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import Link from "next/link";
-import { useState } from "react";
+import { FormEvent, useState } from "react";
 import { object as yupObject, string as yupString } from "yup";
 
 const schema = yupObject().shape({
@@ -25,6 +26,19 @@ const Signup = () => {
   const { email, fullName, userName, password } = formState;
   const isValid = schema.isValidSync(formState);
 
+  const handleSubmit = async (evt: FormEvent<HTMLFormElement>) => {
+    evt.preventDefault();
+
+    try {
+      const auth = getAuth();
+      await createUserWithEmailAndPassword(auth, email, password);
+      console.log("success");
+    } catch (err: any) {
+      console.log(err.code);
+      console.log(err.message);
+    }
+  };
+
   return (
     <section className={styles.container}>
       <Box size={4}>
@@ -35,7 +49,7 @@ const Signup = () => {
 
         <Spacer y={4} />
 
-        <form>
+        <form onSubmit={handleSubmit}>
           <Input
             id="email-address"
             label="Email address"
