@@ -39,6 +39,17 @@ const Signup = () => {
     }
   };
 
+  const displayHint = () => {
+    if (Object.values(formState).every((val) => val === "")) return "";
+
+    try {
+      schema.validateSync(formState, { abortEarly: false });
+      return "";
+    } catch (err: any) {
+      return err.errors[0];
+    }
+  };
+
   return (
     <section className={styles.container}>
       <Box size={4}>
@@ -95,8 +106,11 @@ const Signup = () => {
           <Spacer y={2} />
 
           <button className={styles.btn} disabled={!isValid}>
-            Next
+            Sign up
           </button>
+
+          <Spacer y={2} />
+          <p className={styles.hint}>{displayHint()}</p>
         </form>
       </Box>
 

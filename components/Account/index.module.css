@@ -19,3 +19,9 @@
 .msg {
   width: 270px;
 }
+
+.hint {
+  color: var(--gray);
+  font-size: var(--small);
+  height: var(--spacer-2);
+}
