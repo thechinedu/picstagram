@@ -11,8 +11,8 @@ import { object as yupObject, string as yupString } from "yup";
 
 const schema = yupObject().shape({
   email: yupString().email().required(),
-  fullName: yupString().required(),
-  userName: yupString().min(3).required(),
+  fullName: yupString().required().label("Full Name"),
+  userName: yupString().min(3).required().label("User Name"),
   password: yupString().min(6).required(),
 });
 
