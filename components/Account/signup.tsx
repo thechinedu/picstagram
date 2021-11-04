@@ -6,6 +6,7 @@ import Logo from "@components/Logo";
 import Spacer from "@components/Spacer";
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { FormEvent, useState } from "react";
 import { object as yupObject, string as yupString } from "yup";
 
@@ -23,19 +24,25 @@ const Signup = () => {
     userName: "",
     password: "",
   });
+  const [isCreatingAccount, setIsCreatingAccount] = useState(false);
+  const router = useRouter();
   const { email, fullName, userName, password } = formState;
   const isValid = schema.isValidSync(formState);
 
   const handleSubmit = async (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
+    setIsCreatingAccount(true);
 
     try {
       const auth = getAuth();
       await createUserWithEmailAndPassword(auth, email, password);
-      console.log("success");
+      router.push("/");
     } catch (err: any) {
+      // TODO: Display error message to user
       console.log(err.code);
       console.log(err.message);
+    } finally {
+      setIsCreatingAccount(false);
     }
   };
 
@@ -105,8 +112,11 @@ const Signup = () => {
           />
           <Spacer y={2} />
 
-          <button className={styles.btn} disabled={!isValid}>
-            Sign up
+          <button
+            className={styles.btn}
+            disabled={!isValid || isCreatingAccount}
+          >
+            {isCreatingAccount ? "Creating account..." : "Sign up"}
           </button>
 
           <Spacer y={2} />
