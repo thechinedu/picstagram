@@ -1,6 +1,5 @@
 import styles from "./index.module.css";
 
-import { AuthProvider } from "@providers/AuthProvider";
 import Head from "next/head";
 import { FC } from "react";
 
@@ -9,7 +8,7 @@ const Layout: FC = ({ children }) => (
     <Head>
       <title>Picstagram</title>
     </Head>
-    <AuthProvider>{children}</AuthProvider>
+    {children}
   </div>
 );
 

@@ -38,6 +38,7 @@ const Signup = () => {
       await createUserWithEmailAndPassword(auth, email, password);
       router.push("/");
     } catch (err: any) {
+      // This block should only run if there is an error from firebase
       // TODO: Display error message to user
       console.log(err.code);
       console.log(err.message);

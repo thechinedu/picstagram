@@ -1,17 +1,26 @@
 import { getAuth, onAuthStateChanged, User } from "@firebase/auth";
 import { createContext, FC, useEffect, useContext, useState } from "react";
 
-const AuthContext = createContext<User | null>(null);
+type AuthStatus = "pending" | "success";
+
+type AuthContextProps = {
+  user: User | null;
+  userAuthStatus: AuthStatus;
+};
+
+const AuthContext = createContext<AuthContextProps | null>(null);
 
 const { Provider } = AuthContext;
 
 export const AuthProvider: FC = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
+  const [userAuthStatus, setUserAuthStatus] = useState<AuthStatus>("pending");
 
   useEffect(() => {
     const auth = getAuth();
 
     onAuthStateChanged(auth, (user) => {
+      console.log("onAuthStateChanged", user);
       if (user) {
         console.log("User signed in");
         setUser(user);
@@ -22,13 +31,13 @@ export const AuthProvider: FC = ({ children }) => {
     });
   }, []);
 
-  return <Provider value={user}>{children}</Provider>;
+  return <Provider value={{ user, userAuthStatus }}>{children}</Provider>;
 };
 
 export const useAuth = () => {
   const context = useContext(AuthContext);
 
-  if (!context) {
+  if (context === null) {
     throw new Error("useAuth must be used within an AuthProvider");
   }
 
