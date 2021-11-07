@@ -3,9 +3,11 @@ import "@styles/globals.css";
 
 import Layout from "@components/Layout";
 import { AuthProvider } from "@providers/AuthProvider";
-import "@utils/firebase";
+import { config, initializeApp } from "@utils/firebase";
 
 import type { AppProps } from "next/app";
+
+initializeApp(config);
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (

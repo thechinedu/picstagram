@@ -4,10 +4,18 @@ import Box from "@components/Box";
 import Input from "@components/Input";
 import Logo from "@components/Logo";
 import Spacer from "@components/Spacer";
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { useAuth } from "@providers/AuthProvider";
+import {
+  errorCodeToMessage,
+  getAuth,
+  createUserWithEmailAndPassword,
+  sendEmailVerification,
+  updateProfile,
+} from "@utils/firebase";
+import cn from "classnames";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import { object as yupObject, string as yupString } from "yup";
 
 const schema = yupObject().shape({
@@ -25,9 +33,15 @@ const Signup = () => {
     password: "",
   });
   const [isCreatingAccount, setIsCreatingAccount] = useState(false);
+  const [serverErrorCode, setServerErrorCode] = useState("");
   const router = useRouter();
+  const { user } = useAuth();
   const { email, fullName, userName, password } = formState;
   const isValid = schema.isValidSync(formState);
+
+  // TODO: find a better way to do this so that the sign up component doesn't have to render at all
+  // maybe the Layout component can handle this?
+  if (user) router.push("/");
 
   const handleSubmit = async (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
@@ -35,19 +49,32 @@ const Signup = () => {
 
     try {
       const auth = getAuth();
-      await createUserWithEmailAndPassword(auth, email, password);
+      const { user } = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+
+      await updateProfile(user, {
+        displayName: fullName,
+      });
+
+      await sendEmailVerification(user);
+
+      setServerErrorCode("");
+
       router.push("/");
     } catch (err: any) {
-      // This block should only run if there is an error from firebase
-      // TODO: Display error message to user
-      console.log(err.code);
-      console.log(err.message);
+      setServerErrorCode(err.code);
     } finally {
       setIsCreatingAccount(false);
     }
   };
 
   const displayHint = () => {
+    // TODO: serverErrorCode should be reset when a user starts updating the relevant input field
+    if (serverErrorCode) return errorCodeToMessage(serverErrorCode);
+
     if (Object.values(formState).every((val) => val === "")) return "";
 
     try {
@@ -121,7 +148,11 @@ const Signup = () => {
           </button>
 
           <Spacer y={2} />
-          <p className={styles.hint}>{displayHint()}</p>
+          <p
+            className={cn(styles.hint, { [styles.errorHint]: serverErrorCode })}
+          >
+            {displayHint()}
+          </p>
         </form>
       </Box>
 

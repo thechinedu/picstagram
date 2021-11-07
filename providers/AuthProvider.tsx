@@ -1,5 +1,7 @@
-import { getAuth, onAuthStateChanged, User } from "@firebase/auth";
+import { getAuth, onAuthStateChanged } from "@utils/firebase";
 import { createContext, FC, useEffect, useContext, useState } from "react";
+
+import type { User } from "@utils/firebase";
 
 type AuthStatus = "pending" | "success";
 
@@ -20,7 +22,6 @@ export const AuthProvider: FC = ({ children }) => {
     const auth = getAuth();
 
     onAuthStateChanged(auth, (user) => {
-      console.log("onAuthStateChanged", user);
       if (user) {
         console.log("User signed in");
         setUser(user);
@@ -28,6 +29,8 @@ export const AuthProvider: FC = ({ children }) => {
         console.log("User signed out");
         setUser(null);
       }
+
+      setUserAuthStatus("success");
     });
   }, []);
 

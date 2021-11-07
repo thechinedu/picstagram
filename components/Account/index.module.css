@@ -25,3 +25,7 @@
   font-size: var(--small);
   height: var(--spacer-2);
 }
+
+.errorHint {
+  color: var(--tomato);
+}
