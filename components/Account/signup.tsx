@@ -15,7 +15,7 @@ import {
 import cn from "classnames";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { FormEvent, useEffect, useState } from "react";
+import { FormEvent, useState } from "react";
 import { object as yupObject, string as yupString } from "yup";
 
 const schema = yupObject().shape({
