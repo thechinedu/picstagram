@@ -65,6 +65,7 @@ const Signup = () => {
 
       router.push("/");
     } catch (err: any) {
+      console.log(err.code, err.message);
       setServerErrorCode(err.code);
     } finally {
       setIsCreatingAccount(false);
