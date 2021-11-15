@@ -1,52 +1,35 @@
-import {
-  act,
-  render,
-  RenderResult,
-  screen,
-  waitFor,
-} from "@testing-library/react";
+import { act, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import Signup from "@pages/sign-up";
 import { AuthProvider } from "@providers/AuthProvider";
-import { getAuth, createUserWithEmailAndPassword } from "@utils/firebase";
+import { createUserWithEmailAndPassword } from "@utils/firebase";
+import { useRouter } from "next/router";
 
 jest.mock("@utils/firebase");
+jest.mock("next/router");
 
-(getAuth as jest.Mock).mockReturnValue({});
 (createUserWithEmailAndPassword as jest.Mock).mockReturnValue({
   user: {},
 });
 
+(useRouter as jest.Mock).mockReturnValue([]);
+
 describe("Home", () => {
-  let container: RenderResult;
-
-  // beforeAll(() => {
-  //   initializeApp(config);
-
-  //   auth = getAuth();
-  //   connectAuthEmulator(auth, "http://localhost:9099");
-  // });
-
-  beforeEach(async () => {
-    await waitFor(() => {
-      container = render(
-        <AuthProvider>
-          <Signup />
-        </AuthProvider>
-      );
-    });
+  beforeEach(() => {
+    render(
+      <AuthProvider>
+        <Signup />
+      </AuthProvider>
+    );
   });
 
   it("renders the picstagram heading", () => {
-    const heading = container.getByText("Picstagram");
+    const heading = screen.getByText("Picstagram");
     expect(heading).toBeInTheDocument();
   });
 
   describe("when a user enters valid values", () => {
     it("creates a new user", async () => {
-      // allow(getAuth).toBeCalled().andReturn(auth);
-      // allow(getAuth).toReceive()
-      // allow(createUser).toBeCalled().with(3 args).andThrow()
       /**
        * Mock firebase auth
        * test that the right hint is displayed
@@ -54,13 +37,13 @@ describe("Home", () => {
        * test that signup is not allowed if the email is already in use
        * test that signup is not allowed if the password is not strong enough
        */
-      const emailInput = container.getByLabelText("Email address");
-      const fullNameInput = container.getByLabelText("Full Name");
-      const userNameInput = container.getByLabelText("Username");
-      const passwordInput = container.getByLabelText("Password");
-      const submitButton = container.getByText("Sign up");
+      const emailInput = screen.getByLabelText("Email address");
+      const fullNameInput = screen.getByLabelText("Full Name");
+      const userNameInput = screen.getByLabelText("Username");
+      const passwordInput = screen.getByLabelText("Password");
+      const submitButton = screen.getByText("Sign up");
 
-      // expect(submitButton).toBeDisabled();
+      expect(submitButton).toBeDisabled();
 
       userEvent.type(emailInput, "test@example.com");
       userEvent.type(fullNameInput, "Test User");
@@ -68,8 +51,10 @@ describe("Home", () => {
       userEvent.type(passwordInput, "s3c3r3tp@ss");
       // screen.debug();
 
-      // expect(submitButton).toBeEnabled();
+      expect(submitButton).toBeEnabled();
+
       userEvent.click(submitButton);
+      await act(async () => {}); // TODO: temp fix for act warnings. Find a better solution
 
       expect(4).toBe(4);
     });
