@@ -1,26 +1,14 @@
-import { act, render, screen } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
 import Signup from "@pages/sign-up";
-import { AuthProvider } from "@providers/AuthProvider";
-import { createUserWithEmailAndPassword } from "@utils/firebase";
+import { createUserWithEmailAndPassword, getAuth } from "@utils/firebase";
+import { act, render, screen, userEvent } from "@utils/test-utils";
 import { useRouter } from "next/router";
 
 jest.mock("@utils/firebase");
 jest.mock("next/router");
 
-(createUserWithEmailAndPassword as jest.Mock).mockReturnValue({
-  user: {},
-});
-
-(useRouter as jest.Mock).mockReturnValue([]);
-
 describe("Home", () => {
   beforeEach(() => {
-    render(
-      <AuthProvider>
-        <Signup />
-      </AuthProvider>
-    );
+    render(<Signup />);
   });
 
   it("renders the picstagram heading", () => {
@@ -37,11 +25,24 @@ describe("Home", () => {
        * test that signup is not allowed if the email is already in use
        * test that signup is not allowed if the password is not strong enough
        */
-      const emailInput = screen.getByLabelText("Email address");
-      const fullNameInput = screen.getByLabelText("Full Name");
-      const userNameInput = screen.getByLabelText("Username");
-      const passwordInput = screen.getByLabelText("Password");
-      const submitButton = screen.getByText("Sign up");
+      const mockRouterReturn: string[] = [];
+      const mockAuthReturn = {};
+
+      (getAuth as jest.Mock).mockReturnValue(mockAuthReturn);
+
+      (createUserWithEmailAndPassword as jest.Mock).mockReturnValue({
+        user: {},
+      });
+
+      (useRouter as jest.Mock).mockReturnValue(mockRouterReturn);
+
+      const emailInput: HTMLInputElement =
+        screen.getByLabelText("Email address");
+      const fullNameInput: HTMLInputElement =
+        screen.getByLabelText("Full Name");
+      const userNameInput: HTMLInputElement = screen.getByLabelText("Username");
+      const passwordInput: HTMLInputElement = screen.getByLabelText("Password");
+      const submitButton: HTMLButtonElement = screen.getByText("Sign up");
 
       expect(submitButton).toBeDisabled();
 
@@ -49,14 +50,19 @@ describe("Home", () => {
       userEvent.type(fullNameInput, "Test User");
       userEvent.type(userNameInput, "testuser");
       userEvent.type(passwordInput, "s3c3r3tp@ss");
-      // screen.debug();
 
       expect(submitButton).toBeEnabled();
 
       userEvent.click(submitButton);
-      await act(async () => {}); // TODO: temp fix for act warnings. Find a better solution
+      await act(async () => {}); // TODO: temp fix for 'act warnings'. Find a better solution
 
-      expect(4).toBe(4);
+      expect(createUserWithEmailAndPassword).toHaveBeenCalledWith(
+        mockAuthReturn,
+        emailInput.value,
+        passwordInput.value
+      );
+      expect(mockRouterReturn.length).toBe(1);
+      expect(mockRouterReturn[0]).toBe("/");
     });
   });
 });
