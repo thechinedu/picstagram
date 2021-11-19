@@ -7,8 +7,19 @@ jest.mock("@utils/firebase");
 jest.mock("next/router");
 
 describe("Home", () => {
+  let emailInput: HTMLInputElement;
+  let fullNameInput: HTMLInputElement;
+  let userNameInput: HTMLInputElement;
+  let passwordInput: HTMLInputElement;
+  let signUpButton: HTMLButtonElement;
+
   beforeEach(() => {
     render(<Signup />);
+    emailInput = screen.getByLabelText("Email address");
+    fullNameInput = screen.getByLabelText("Full Name");
+    userNameInput = screen.getByLabelText("Username");
+    passwordInput = screen.getByLabelText("Password");
+    signUpButton = screen.getByText("Sign up");
   });
 
   it("renders the picstagram heading", () => {
@@ -18,14 +29,7 @@ describe("Home", () => {
 
   describe("when a user enters valid values", () => {
     it("creates a new user", async () => {
-      /**
-       * Mock firebase auth
-       * test that the right hint is displayed
-       * test that the user is redirected to the home page (mock router if it is not possible to test that a redirect happens)
-       * test that signup is not allowed if the email is already in use
-       * test that signup is not allowed if the password is not strong enough
-       */
-      const mockRouterReturn: string[] = [];
+      const mockRouter = jest.fn();
       const mockAuthReturn = {};
 
       (getAuth as jest.Mock).mockReturnValue(mockAuthReturn);
@@ -34,26 +38,20 @@ describe("Home", () => {
         user: {},
       });
 
-      (useRouter as jest.Mock).mockReturnValue(mockRouterReturn);
+      (useRouter as jest.Mock).mockImplementation(() => ({
+        push: mockRouter,
+      }));
 
-      const emailInput: HTMLInputElement =
-        screen.getByLabelText("Email address");
-      const fullNameInput: HTMLInputElement =
-        screen.getByLabelText("Full Name");
-      const userNameInput: HTMLInputElement = screen.getByLabelText("Username");
-      const passwordInput: HTMLInputElement = screen.getByLabelText("Password");
-      const submitButton: HTMLButtonElement = screen.getByText("Sign up");
-
-      expect(submitButton).toBeDisabled();
+      expect(signUpButton).toBeDisabled();
 
       userEvent.type(emailInput, "test@example.com");
       userEvent.type(fullNameInput, "Test User");
       userEvent.type(userNameInput, "testuser");
       userEvent.type(passwordInput, "s3c3r3tp@ss");
 
-      expect(submitButton).toBeEnabled();
+      expect(signUpButton).toBeEnabled();
 
-      userEvent.click(submitButton);
+      userEvent.click(signUpButton);
       await act(async () => {}); // TODO: temp fix for 'act warnings'. Find a better solution
 
       expect(createUserWithEmailAndPassword).toHaveBeenCalledWith(
@@ -61,8 +59,36 @@ describe("Home", () => {
         emailInput.value,
         passwordInput.value
       );
-      expect(mockRouterReturn.length).toBe(1);
-      expect(mockRouterReturn[0]).toBe("/");
+      expect(mockRouter).toHaveBeenCalledWith("/");
+    });
+  });
+
+  describe("when a user enters invalid values", () => {
+    it("shows helpful hints when filling out the form", () => {
+      const hintElement = screen.getByTestId("hint");
+
+      expect(hintElement).toHaveTextContent("");
+
+      userEvent.type(emailInput, "test@");
+      expect(hintElement).toHaveTextContent("Email must be a valid email");
+
+      userEvent.clear(emailInput);
+      userEvent.type(emailInput, "test@example.com");
+      expect(hintElement).toHaveTextContent("Full Name is a required field");
+
+      userEvent.type(fullNameInput, "Test User");
+      expect(hintElement).toHaveTextContent(
+        "User Name must be at least 3 characters"
+      );
+
+      userEvent.type(userNameInput, "testuser");
+      expect(hintElement).toHaveTextContent(
+        "Password must be at least 6 characters"
+      );
+
+      userEvent.type(passwordInput, "s3c3r3tp@ss");
+
+      expect(hintElement).toHaveTextContent("");
     });
   });
 });

@@ -19,10 +19,10 @@ import { FormEvent, useState } from "react";
 import { object as yupObject, string as yupString } from "yup";
 
 const schema = yupObject().shape({
-  email: yupString().email().required(),
+  email: yupString().email().required().label("Email"),
   fullName: yupString().required().label("Full Name"),
   userName: yupString().min(3).required().label("User Name"),
-  password: yupString().min(6).required(),
+  password: yupString().min(6).required().label("Password"),
 });
 
 const Signup = () => {
@@ -65,7 +65,6 @@ const Signup = () => {
 
       router.push("/");
     } catch (err: any) {
-      console.log(err.code, err.message);
       setServerErrorCode(err.code);
     } finally {
       setIsCreatingAccount(false);
@@ -151,6 +150,7 @@ const Signup = () => {
           <Spacer y={2} />
           <p
             className={cn(styles.hint, { [styles.errorHint]: serverErrorCode })}
+            data-testid="hint"
           >
             {displayHint()}
           </p>
