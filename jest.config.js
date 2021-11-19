@@ -3,6 +3,10 @@ module.exports = {
     "**/*.{js,jsx,ts,tsx}",
     "!**/*.d.ts",
     "!**/node_modules/**",
+    "!**/.next/**",
+    "!**/coverage/**",
+    "!jest.config.js",
+    "!next.config.js",
   ],
   moduleFileExtensions: ["tsx", "ts", "jsx", "js"],
   moduleNameMapper: {
