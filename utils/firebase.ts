@@ -8,6 +8,11 @@ export const config = {
 };
 
 export const errorCodeToMessage = (errorCode: string) => {
+  // TODO: only "auth/email-already-in-use" will be triggered in-app. Maybe remove the rest.
+  // It is very unlikely that the other error codes will be used
+  // maybe except for "auth/weak-password" but I am not sure how
+  // that is triggered
+
   switch (errorCode) {
     case "auth/email-already-in-use":
       return "Email is already in use";

@@ -3,11 +3,21 @@ import "@styles/globals.css";
 
 import Layout from "@components/Layout";
 import { AuthProvider } from "@providers/AuthProvider";
-import { config, initializeApp } from "@utils/firebase";
+import {
+  config,
+  connectAuthEmulator,
+  getAuth,
+  initializeApp,
+} from "@utils/firebase";
 
 import type { AppProps } from "next/app";
 
 initializeApp(config);
+
+if (process.env.NODE_ENV === "development") {
+  const auth = getAuth();
+  connectAuthEmulator(auth, "http://localhost:9099");
+}
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (

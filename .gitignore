@@ -36,3 +36,5 @@ yarn-error.log*
 
 .firebaserc
 firebase.json
+
+cypress.env.json

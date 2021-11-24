@@ -143,6 +143,7 @@ const Signup = () => {
           <button
             className={styles.btn}
             disabled={!isValid || isCreatingAccount}
+            data-testid="submit"
           >
             {isCreatingAccount ? "Creating account..." : "Sign up"}
           </button>
