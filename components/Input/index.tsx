@@ -36,6 +36,7 @@ const PasswordInput: FC<
         <span
           className={styles.passwordReveal}
           onClick={handleTogglePasswordReveal}
+          data-testid="password-reveal"
         >
           {action}
         </span>

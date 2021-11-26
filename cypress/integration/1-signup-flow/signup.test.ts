@@ -1,28 +1,17 @@
-/**
- * DONE create cypress test user by making a request to firebase auth rest endpoint (use cypress.request)
- 
- * DONE Test that user sign up is allowed via UI
- * Test that the right hint shows up
- * DONE Delete test user after test is complete
- * Test that user signup is not allowed if email is already in use
- * 
- */
-
-let idToken: string;
 const identityURL = Cypress.env("FIREBASE_AUTH_EMULATOR_IDENTITY_URL");
 const accountsURL = Cypress.env("FIREBASE_AUTH_EMULATOR_ACCOUNTS_URL");
 const apiKey = Cypress.env("FIREBASE_API_KEY");
+const cypressUserEmail = "cypress-user@example.com";
 
 const createCypressUser = () => {
   cy.request({
     method: "POST",
     url: `${identityURL}/accounts:signUp?key=${apiKey}`,
     body: {
-      email: "cypress-user@example.com",
+      email: cypressUserEmail,
       password: "s3cr3tp@ss!",
     },
   }).then((response) => {
-    idToken = response.body.idToken;
     expect(response.status).to.equal(200);
   });
 };
@@ -37,31 +26,66 @@ const clearUserAccounts = () => {
 };
 
 describe("Signup flow", () => {
+  beforeEach(() => {
+    cy.visit("/sign-up");
+    cy.get("#email-address").as("email");
+    cy.get("#full-name").as("fullname");
+    cy.get("#username").as("username");
+    cy.get("#password").as("password");
+    cy.get("[data-testid=submit]").as("submit");
+  });
+
   afterEach(() => {
     clearUserAccounts();
   });
 
-  context("When valid values are provided", () => {
-    it("allows user signup", () => {
-      cy.visit("/sign-up");
-      cy.contains("Picstagram");
-      cy.contains("Sign up to see photos and videos from your friends");
+  it("allows user signup", () => {
+    cy.contains("Picstagram");
+    cy.contains("Sign up to see photos and videos from your friends");
 
-      cy.get("#email-address").type("test@example.com");
-      cy.get("#full-name").type("Test User");
-      cy.get("#username").type("Testiculous");
-      cy.get("#password").type("s3cr3tp@ss!");
+    cy.get("@email").type("test@");
+    cy.contains("Email must be a valid email");
+    cy.get("@email").type("example.com");
 
-      cy.get("[data-testid=submit]").click();
+    cy.contains("Full Name is a required field");
+    cy.get("@fullname").type("Test User");
 
-      cy.location("pathname").should("equal", "/");
+    cy.contains("User Name must be at least 3 characters");
+    cy.get("@username").type("Testiculous");
 
-      // TODO: this assertion will change and is temporary until the actual dashboard for logged in users is implemented
-      cy.contains("Homepage for signed in user");
-    });
+    cy.contains("Password must be at least 6 characters");
+    cy.get("@password").type("s3cr3tp@ss!");
 
-    it("basic test", () => {
-      cy.visit("/sign-up");
-    });
+    cy.get("@submit").click();
+
+    cy.location("pathname").should("equal", "/");
+
+    // TODO: this assertion will change and is temporary until the actual dashboard for logged in users is implemented
+    cy.contains("Homepage for signed in user");
+  });
+
+  it("user can show/hide password", () => {
+    cy.get("@password").should("have.attr", "type", "password");
+    cy.get("@password").type("s3cr3tp@ss!");
+
+    cy.get("[data-testid=password-reveal]").as("password-reveal");
+
+    cy.get("@password-reveal").contains("Show").click();
+    cy.get("@password").should("have.attr", "type", "text");
+
+    cy.get("@password-reveal").contains("Hide").click();
+    cy.get("@password").should("have.attr", "type", "password");
+  });
+
+  it("doesn't allow user sign up if the specified email is already in use", () => {
+    createCypressUser();
+
+    cy.get("@email").type(cypressUserEmail);
+    cy.get("@fullname").type("Test User");
+    cy.get("@username").type("Testiculous");
+    cy.get("@password").type("s3cr3tp@ss!");
+    cy.get("@submit").click();
+
+    cy.contains("Email is already in use");
   });
 });
