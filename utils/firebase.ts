@@ -32,6 +32,7 @@ export {
   createUserWithEmailAndPassword,
   onAuthStateChanged,
   sendEmailVerification,
+  signInWithEmailAndPassword,
   signOut,
   updateProfile,
 } from "firebase/auth";

@@ -4,8 +4,11 @@ import Box from "@components/Box";
 import Input from "@components/Input";
 import Logo from "@components/Logo";
 import Spacer from "@components/Spacer";
+import { getAuth, signInWithEmailAndPassword } from "@utils/firebase";
+import cn from "classnames";
 import Link from "next/link";
-import { useState } from "react";
+import { useRouter } from "next/router";
+import { FormEvent, useState } from "react";
 import { object as yupObject, string as yupString } from "yup";
 
 const schema = yupObject().shape({
@@ -18,8 +21,22 @@ const Login = () => {
     email: "",
     password: "",
   });
+  const [hint, setHint] = useState("");
   const { email, password } = formState;
   const isValid = schema.isValidSync(formState);
+  const router = useRouter();
+
+  const handleSubmit = async (evt: FormEvent<HTMLFormElement>) => {
+    evt.preventDefault();
+
+    try {
+      await signInWithEmailAndPassword(getAuth(), email, password);
+
+      router.push("/");
+    } catch {
+      setHint("Invalid email or password. Please try again");
+    }
+  };
 
   return (
     <section className={styles.container}>
@@ -28,7 +45,7 @@ const Login = () => {
 
         <Spacer y={4} />
 
-        <form>
+        <form onSubmit={handleSubmit}>
           <Input
             id="email-address"
             label="Email address"
@@ -53,6 +70,11 @@ const Login = () => {
           <button className={styles.btn} disabled={!isValid}>
             Log In
           </button>
+
+          <Spacer y={2} />
+          <p className={cn(styles.hint, styles.errorHint)} data-testid="hint">
+            {hint}
+          </p>
         </form>
 
         <Spacer y={4} />

@@ -35,6 +35,8 @@
 }
 
 .passwordReveal {
+  cursor: pointer;
+  font-weight: 600;
   position: absolute;
   top: 22%;
   right: 9px;

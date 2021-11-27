@@ -9,7 +9,8 @@
     "lint": "next lint",
     "test": "jest",
     "coverage": "jest --coverage",
-    "e2e": "cypress open"
+    "e2e": "cypress open",
+    "emulator": "firebase emulators:start --only auth"
   },
   "dependencies": {
     "classnames": "^2.3.1",

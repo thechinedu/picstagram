@@ -8,11 +8,13 @@
   border-radius: 4px;
   background-color: var(--blue);
   color: var(--white);
+  cursor: pointer;
   padding: var(--spacer-1\/2) var(--spacer-2);
   width: 100%;
 }
 
 .btn:disabled {
+  cursor: not-allowed;
   opacity: 0.3;
 }
 
