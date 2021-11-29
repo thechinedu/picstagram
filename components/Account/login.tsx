@@ -7,7 +7,6 @@ import Spacer from "@components/Spacer";
 import { getAuth, signInWithEmailAndPassword } from "@utils/firebase";
 import cn from "classnames";
 import Link from "next/link";
-import { useRouter } from "next/router";
 import { FormEvent, useState } from "react";
 import { object as yupObject, string as yupString } from "yup";
 
@@ -22,18 +21,20 @@ const Login = () => {
     password: "",
   });
   const [hint, setHint] = useState("");
+  const [isLoggingIn, setIsLoggingIn] = useState(false);
   const { email, password } = formState;
   const isValid = schema.isValidSync(formState);
-  const router = useRouter();
+  const isSubmitButtonDisabled = !isValid || isLoggingIn;
 
   const handleSubmit = async (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
+    setIsLoggingIn(true);
 
     try {
-      await signInWithEmailAndPassword(getAuth(), email, password);
-
-      router.push("/");
+      const auth = getAuth();
+      await signInWithEmailAndPassword(auth, email, password);
     } catch {
+      setIsLoggingIn(false);
       setHint("Invalid email or password. Please try again");
     }
   };
@@ -67,8 +68,12 @@ const Login = () => {
           />
           <Spacer y={2} />
 
-          <button className={styles.btn} disabled={!isValid}>
-            Log In
+          <button
+            className={styles.btn}
+            disabled={isSubmitButtonDisabled}
+            data-testid="submit"
+          >
+            {isLoggingIn ? "Logging in..." : "Log in"}
           </button>
 
           <Spacer y={2} />

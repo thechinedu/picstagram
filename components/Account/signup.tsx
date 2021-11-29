@@ -38,6 +38,7 @@ const Signup = () => {
   const { user } = useAuth();
   const { email, fullName, userName, password } = formState;
   const isValid = schema.isValidSync(formState);
+  const isSubmitButtonDisabled = !isValid || isCreatingAccount;
 
   // TODO: find a better way to do this so that the sign up component doesn't have to render at all
   // maybe the Layout component can handle this?
@@ -65,9 +66,8 @@ const Signup = () => {
 
       router.push("/");
     } catch (err: any) {
-      setServerErrorCode(err.code);
-    } finally {
       setIsCreatingAccount(false);
+      setServerErrorCode(err.code);
     }
   };
 
@@ -142,7 +142,7 @@ const Signup = () => {
 
           <button
             className={styles.btn}
-            disabled={!isValid || isCreatingAccount}
+            disabled={isSubmitButtonDisabled}
             data-testid="submit"
           >
             {isCreatingAccount ? "Creating account..." : "Sign up"}
