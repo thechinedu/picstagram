@@ -6,7 +6,7 @@ import { useRouter } from "next/router";
 jest.mock("@utils/firebase");
 jest.mock("next/router");
 
-describe("Home", () => {
+describe("Sign up", () => {
   let emailInput: HTMLInputElement;
   let fullNameInput: HTMLInputElement;
   let userNameInput: HTMLInputElement;
@@ -42,6 +42,7 @@ describe("Home", () => {
         push: mockRouter,
       }));
 
+      expect(screen.queryByText("Sign up")).toBeInTheDocument();
       expect(signUpButton).toBeDisabled();
 
       userEvent.type(emailInput, "test@example.com");
@@ -60,6 +61,7 @@ describe("Home", () => {
         passwordInput.value
       );
       expect(mockRouter).toHaveBeenCalledWith("/");
+      expect(screen.queryByText("Sign up")).not.toBeInTheDocument();
     });
   });
 
