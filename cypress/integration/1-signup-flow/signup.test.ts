@@ -1,29 +1,8 @@
-const identityURL = Cypress.env("FIREBASE_AUTH_EMULATOR_IDENTITY_URL");
-const accountsURL = Cypress.env("FIREBASE_AUTH_EMULATOR_ACCOUNTS_URL");
-const apiKey = Cypress.env("FIREBASE_API_KEY");
-const cypressUserEmail = "cypress-user@example.com";
-
-const createCypressUser = () => {
-  cy.request({
-    method: "POST",
-    url: `${identityURL}/accounts:signUp?key=${apiKey}`,
-    body: {
-      email: cypressUserEmail,
-      password: "s3cr3tp@ss!",
-    },
-  }).then((response) => {
-    expect(response.status).to.equal(200);
-  });
-};
-
-const clearUserAccounts = () => {
-  cy.request({
-    method: "DELETE",
-    url: accountsURL,
-  }).then((response) => {
-    expect(response.status).to.equal(200);
-  });
-};
+import {
+  clearUserAccounts,
+  createCypressUser,
+  cypressUserEmail,
+} from "@cypress/support";
 
 describe("Signup flow", () => {
   beforeEach(() => {

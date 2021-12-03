@@ -1,20 +1,25 @@
-describe("Signup flow", () => {
+import {
+  clearUserAccounts,
+  createCypressUser,
+  cypressUserEmail,
+} from "@cypress/support";
+
+describe("Login flow", () => {
   beforeEach(() => {
-    cy.visit("/");
     createCypressUser();
+    cy.visit("/");
 
     cy.get("#email-address").as("email");
     cy.get("#password").as("password");
     cy.get("[data-testid=submit]").as("submit");
   });
 
-  after(() => {
+  afterEach(() => {
     clearUserAccounts();
   });
 
   it("allows user login", () => {
     cy.contains("Picstagram");
-    cy.contains("Sign up to see photos and videos from your friends");
 
     cy.get("@email").type(cypressUserEmail);
     cy.get("@password").type("s3cr3tp@ss!");
@@ -35,8 +40,8 @@ describe("Signup flow", () => {
 
     cy.contains("Invalid email or password. Please try again");
 
-    cy.get("@email").type("non-existent@example.com");
-    cy.get("@password").type("fake@pass!");
+    cy.get("@email").clear().type("non-existent@example.com");
+    cy.get("@password").clear().type("fake@pass!");
 
     cy.get("@submit").click();
 
