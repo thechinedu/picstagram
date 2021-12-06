@@ -1,27 +1,11 @@
 import Account from "@components/Account";
+import Dashboard from "@components/Dashboard";
 import { useAuth } from "@providers/AuthProvider";
-import { getAuth, signOut } from "@utils/firebase";
 
 import type { NextPage } from "next";
 
 const GuestHome = () => <Account type="login" />;
-const AuthUserHome = () => {
-  const handleSignOut = async () => {
-    try {
-      const auth = getAuth();
-      await signOut(auth);
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  return (
-    <div>
-      Homepage for signed in user{" "}
-      <button onClick={handleSignOut}>Sign out</button>
-    </div>
-  );
-};
+const AuthUserHome = () => <Dashboard />;
 
 const Home: NextPage = () => {
   // TODO: if user is signed in, the GuestHome component first renders before the AuthUserHome component

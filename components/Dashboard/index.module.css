@@ -1,0 +1,7 @@
+.welcomeContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: var(--spacer-2);
+  text-align: center;
+}
