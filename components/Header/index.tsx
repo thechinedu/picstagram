@@ -2,10 +2,20 @@ import styles from "./index.module.css";
 
 import Logo from "@components/Logo";
 import { Chat, Compass, Heart, Plus } from "@components/Icons";
+import { getAuth, signOut } from "@utils/firebase";
 import Image from "next/image";
 import Link from "next/link";
 
 const Header = () => {
+  const handleSignOut = async () => {
+    try {
+      const auth = getAuth();
+      await signOut(auth);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <header className={styles.header}>
       <nav className={styles.nav}>
@@ -25,6 +35,7 @@ const Header = () => {
           width={22}
           height={22}
           className={styles.profileImage}
+          onClick={handleSignOut}
         />
       </nav>
     </header>
