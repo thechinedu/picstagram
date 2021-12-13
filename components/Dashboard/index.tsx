@@ -4,7 +4,7 @@ import Box from "@components/Box";
 import Header from "@components/Header";
 import { Home } from "@components/Icons";
 import Spacer from "@components/Spacer";
-import Image from "next/image";
+import StoryList from "@components/StoryList";
 
 const WelcomeMessage = () => (
   <Box size={2} className={styles.welcomeContainer}>
@@ -27,35 +27,7 @@ const Dashboard = () => {
     <main>
       <Header />
 
-      <Box size={2} className={styles.storyContainer}>
-        <div className={styles.storyImageContainer}>
-          <figure>
-            <Image
-              src="https://placebeard.it/65/65/notag"
-              alt="user story"
-              width={65}
-              height={65}
-              className={styles.storyImage}
-            />
-
-            <figcaption>username</figcaption>
-          </figure>
-        </div>
-
-        <div className={styles.storyImageContainer}>
-          <figure>
-            <Image
-              src="https://placebeard.it/65/65/notag"
-              alt="user story"
-              width={65}
-              height={65}
-              className={styles.storyImage}
-            />
-
-            <figcaption>username</figcaption>
-          </figure>
-        </div>
-      </Box>
+      <StoryList />
 
       <WelcomeMessage />
     </main>

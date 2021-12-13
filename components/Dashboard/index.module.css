@@ -1,25 +1,3 @@
-.storyContainer {
-  border-bottom: 1px solid var(--lighter-gray);
-  display: flex;
-  align-items: center;
-}
-
-.storyImageContainer {
-  border: 2px solid var(--tomato);
-  border-radius: 50%;
-  width: 65px;
-  height: 65px;
-  padding: calc(var(--spacer-1\/2) / 2);
-}
-
-.storyImageContainer figcaption {
-  font-size: var(--small);
-}
-
-.storyImage {
-  border-radius: 50%;
-}
-
 .welcomeContainer {
   display: flex;
   flex-direction: column;

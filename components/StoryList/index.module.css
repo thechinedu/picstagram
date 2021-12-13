@@ -1,0 +1,12 @@
+.storyContainer {
+  border-bottom: 1px solid var(--lighter-gray);
+  display: flex;
+  align-items: center;
+  overflow: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.storyContainer::-webkit-scrollbar {
+  height: 0;
+}
