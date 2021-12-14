@@ -8,6 +8,10 @@
   margin-right: var(--spacer-2);
 }
 
+.storyImageContainer:last-of-type {
+  margin-right: 0;
+}
+
 .storyImageContainer figcaption {
   font-size: var(--small);
 }

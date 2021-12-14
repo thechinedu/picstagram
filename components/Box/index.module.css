@@ -2,5 +2,7 @@
   .box {
     background-color: var(--white);
     border: 1px solid var(--lighter-gray);
+    border-radius: 3px;
+    max-width: 620px;
   }
 }

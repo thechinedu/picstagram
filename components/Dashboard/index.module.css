@@ -7,7 +7,7 @@
 
 @media (min-width: 450px) {
   .welcomeContainer {
-    margin-top: var(--spacer-2);
+    margin: var(--spacer-2) auto auto;
   }
 }
 

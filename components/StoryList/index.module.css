@@ -10,3 +10,9 @@
 .storyContainer::-webkit-scrollbar {
   height: 0;
 }
+
+@media (min-width: 450px) {
+  .storyContainer {
+    margin: var(--spacer-2) auto auto;
+  }
+}

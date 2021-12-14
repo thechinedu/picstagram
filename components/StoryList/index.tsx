@@ -2,7 +2,11 @@ import styles from "./index.module.css";
 
 import Box from "@components/Box";
 import Story from "@components/Story";
+import { CircleRight } from "@components/Icons";
 import { FC } from "react";
+
+// Formula for calculating the amount of pages for the stories
+// total_items / (scroll_left_width / size of individual item)  => Math.round(10/ (425/425))
 
 const StoryList: FC = () => {
   return (
@@ -10,6 +14,7 @@ const StoryList: FC = () => {
       {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((i) => (
         <Story key={i} />
       ))}
+      <CircleRight />
     </Box>
   );
 };
