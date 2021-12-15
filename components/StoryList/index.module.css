@@ -1,3 +1,13 @@
+.mainContainer {
+  position: relative;
+}
+
+@media (min-width: 450px) {
+  .mainContainer {
+    margin: var(--spacer-2) auto auto;
+  }
+}
+
 .storyContainer {
   border-bottom: 1px solid var(--lighter-gray);
   display: flex;
@@ -5,14 +15,29 @@
   overflow: auto;
   scrollbar-width: none;
   -ms-overflow-style: none;
+  padding: var(--spacer-3);
+  width: 100%;
 }
 
 .storyContainer::-webkit-scrollbar {
   height: 0;
 }
 
-@media (min-width: 450px) {
-  .storyContainer {
-    margin: var(--spacer-2) auto auto;
-  }
+.mainContainer [class*="icon"] {
+  background-color: var(--lighter-gray);
+  border-radius: 50%;
+  cursor: pointer;
+  position: absolute;
+  fill: var(--off-white);
+  min-width: 24px;
+}
+
+.iconLeft {
+  bottom: 40%;
+  left: 10px;
+}
+
+.iconRight {
+  bottom: 40%;
+  right: 10px;
 }

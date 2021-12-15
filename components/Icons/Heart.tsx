@@ -1,7 +1,6 @@
 const Heart = () => {
   return (
     <svg
-      aria-label="Activity Feed"
       color="#262626"
       fill="#262626"
       height="22"

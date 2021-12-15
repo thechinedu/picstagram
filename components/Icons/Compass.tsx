@@ -1,6 +1,5 @@
 const Compass = () => (
   <svg
-    aria-label="Find people"
     color="#262626"
     fill="#262626"
     height="22"
