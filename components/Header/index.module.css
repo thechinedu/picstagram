@@ -3,9 +3,20 @@
   padding: var(--spacer-1);
 }
 
+@media (min-width: 768px) {
+  .header {
+    padding: var(--spacer-1) var(--spacer-3);
+  }
+}
+
 .nav {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
+}
+
+.nav > * {
+  margin-right: var(--spacer-3);
 }
 
 .logoContainer {
@@ -13,10 +24,20 @@
   margin-right: auto;
 }
 
-.nav > *:not(.logoContainer) {
-  margin-right: var(--spacer-3);
-}
-
 .profileImage {
   border-radius: 50%;
+}
+
+.searchContainer {
+  margin-top: var(--spacer-2);
+  margin-right: 0;
+  flex-basis: 100%;
+}
+
+.searchContainer label {
+  width: 100%;
+}
+
+.searchContainer.desktop {
+  display: none;
 }

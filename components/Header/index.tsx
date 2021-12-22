@@ -2,7 +2,9 @@ import styles from "./index.module.css";
 
 import Logo from "@components/Logo";
 import { Chat, Compass, Heart, Plus } from "@components/Icons";
+import Input from "@components/Input";
 import { getAuth, signOut } from "@utils/firebase";
+import cn from "classnames";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -25,6 +27,16 @@ const Header = () => {
           </a>
         </Link>
 
+        <div className={cn(styles.searchContainer, styles.desktop)}>
+          <Input
+            id="search"
+            label="Search"
+            type="search"
+            value={""}
+            onChange={() => {}}
+          />
+        </div>
+
         <Chat />
         <Plus />
         <Compass />
@@ -37,6 +49,15 @@ const Header = () => {
           className={styles.profileImage}
           onClick={handleSignOut}
         />
+        <div className={cn(styles.searchContainer, styles.mobile)}>
+          <Input
+            id="search"
+            label="Search"
+            type="search"
+            value={""}
+            onChange={() => {}}
+          />
+        </div>
       </nav>
     </header>
   );
