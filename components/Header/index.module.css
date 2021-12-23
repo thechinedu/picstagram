@@ -15,6 +15,13 @@
   flex-wrap: wrap;
 }
 
+@media (min-width: 1024px) {
+  .nav {
+    max-width: 768px;
+    margin: 0 auto;
+  }
+}
+
 .nav > * {
   margin-right: var(--spacer-3);
 }
@@ -32,12 +39,18 @@
   margin-top: var(--spacer-2);
   margin-right: 0;
   flex-basis: 100%;
+  order: 1;
 }
 
 .searchContainer label {
   width: 100%;
 }
 
-.searchContainer.desktop {
-  display: none;
+@media (min-width: 768px) {
+  .searchContainer {
+    order: 0;
+    flex-basis: 40%;
+    margin-top: 0;
+    margin-right: var(--spacer-3);
+  }
 }

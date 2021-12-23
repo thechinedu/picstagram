@@ -27,7 +27,7 @@ const Header = () => {
           </a>
         </Link>
 
-        <div className={cn(styles.searchContainer, styles.desktop)}>
+        <div className={cn(styles.searchContainer)}>
           <Input
             id="search"
             label="Search"
@@ -49,15 +49,6 @@ const Header = () => {
           className={styles.profileImage}
           onClick={handleSignOut}
         />
-        <div className={cn(styles.searchContainer, styles.mobile)}>
-          <Input
-            id="search"
-            label="Search"
-            type="search"
-            value={""}
-            onChange={() => {}}
-          />
-        </div>
       </nav>
     </header>
   );

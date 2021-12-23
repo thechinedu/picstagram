@@ -5,6 +5,7 @@ import Header from "@components/Header";
 import { Home } from "@components/Icons";
 import Spacer from "@components/Spacer";
 import StoryList from "@components/StoryList";
+import Image from "next/image";
 
 const WelcomeMessage = () => (
   <Box size={2} className={styles.welcomeContainer}>
@@ -27,9 +28,39 @@ const Dashboard = () => {
     <main>
       <Header />
 
-      <StoryList />
+      <div className={styles.feedContainer}>
+        <div className={styles.feedContent}>
+          <StoryList />
+          <WelcomeMessage />
 
-      <WelcomeMessage />
+          <Box size={2}>
+            <div className="top-section">
+              <div className="image-and-metadata">
+                <Image
+                  src="https://placebeard.it/30/30/notag"
+                  alt="feed item owner"
+                  width={30}
+                  height={30}
+                />
+
+                <div className="user-name">
+                  <h4>menfashion.feed</h4>
+                </div>
+              </div>
+
+              <div className="menu-vert-icon"></div>
+            </div>
+
+            <div className="middle-section"></div>
+
+            <div className="metadata-section"></div>
+
+            <div className="add-new-comment"></div>
+          </Box>
+        </div>
+
+        <p className={styles.aside}>Suggestions section</p>
+      </div>
     </main>
   );
 };
