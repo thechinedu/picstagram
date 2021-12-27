@@ -1,4 +1,6 @@
-const Compass = () => (
+import { FC, SVGProps } from "react";
+
+const Compass: FC<SVGProps<SVGSVGElement>> = (props) => (
   <svg
     color="#262626"
     fill="#262626"
@@ -6,6 +8,7 @@ const Compass = () => (
     role="img"
     viewBox="0 0 48 48"
     width="22"
+    {...props}
   >
     <path
       clipRule="evenodd"

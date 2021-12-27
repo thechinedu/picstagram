@@ -1,0 +1,20 @@
+.postContainer {
+  margin-top: var(--spacer-2);
+}
+
+.postHeader {
+  display: flex;
+  align-items: center;
+}
+
+.postHeaderImageContainer {
+  margin-right: var(--spacer-2);
+}
+
+.postHeaderImageContainer img {
+  border-radius: 50%;
+}
+
+.postHeaderIcon {
+  margin-left: auto;
+}
