@@ -4,7 +4,6 @@
 
 .postHeader {
   display: flex;
-  align-items: center;
 }
 
 .postHeaderImageContainer {
@@ -17,4 +16,32 @@
 
 .postHeaderIcon {
   margin-left: auto;
+}
+
+.actions {
+  display: flex;
+}
+
+.actions * {
+  margin-right: var(--spacer-2);
+}
+
+.actions *:last-of-type {
+  margin-left: auto;
+  margin-right: 0;
+}
+
+.likeInfo,
+.username {
+  font-weight: 700;
+}
+
+.comments {
+  color: var(--gray);
+}
+
+.dateInfo {
+  color: var(--gray);
+  font-size: var(--small);
+  text-transform: uppercase;
 }

@@ -1,7 +1,8 @@
 import { FC, SVGProps } from "react";
 
-const Compass: FC<SVGProps<SVGSVGElement>> = (props) => (
+const Share: FC<SVGProps<SVGSVGElement>> = (props) => (
   <svg
+    aria-label="Share Post"
     color="#262626"
     fill="#262626"
     height="24"
@@ -10,29 +11,24 @@ const Compass: FC<SVGProps<SVGSVGElement>> = (props) => (
     width="24"
     {...props}
   >
-    <polygon
+    <line
       fill="none"
-      points="13.941 13.953 7.581 16.424 10.06 10.056 16.42 7.585 13.941 13.953"
       stroke="currentColor"
-      strokeLinecap="round"
       strokeLinejoin="round"
       strokeWidth="2"
+      x1="22"
+      x2="9.218"
+      y1="3"
+      y2="10.083"
     />
     <polygon
-      fillRule="evenodd"
-      points="10.06 10.056 13.949 13.945 7.581 16.424 10.06 10.056"
-    />
-    <circle
-      cx="12.001"
-      cy="12.005"
       fill="none"
-      r="10.5"
+      points="11.698 20.334 22 3.001 2 3.001 9.218 10.084 11.698 20.334"
       stroke="currentColor"
-      strokeLinecap="round"
       strokeLinejoin="round"
       strokeWidth="2"
     />
   </svg>
 );
 
-export default Compass;
+export default Share;

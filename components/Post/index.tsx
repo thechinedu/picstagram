@@ -1,7 +1,8 @@
 import styles from "./index.module.css";
 
 import Box from "@components/Box";
-import { Menu } from "@components/Icons";
+import { Bookmark, Comment, Heart, Menu, Share } from "@components/Icons";
+import Spacer from "@components/Spacer";
 import Image from "next/image";
 import { FC } from "react";
 
@@ -20,16 +21,51 @@ const Post: FC = () => {
           </a>
         </div>
 
-        <div className="user-name">
-          <h4>menfashion.feed</h4>
-        </div>
+        <h4>menfashion.feed</h4>
 
         <Menu className={styles.postHeaderIcon} />
       </div>
 
-      <div className="middle-section"></div>
+      <div>
+        <Image
+          src="https://placebeard.it/1080/1080/notag"
+          alt="post content"
+          width={1080}
+          height={1080}
+        />
+      </div>
 
-      <div className="metadata-section"></div>
+      <Spacer y={2} />
+
+      <div>
+        <div className={styles.actions}>
+          <Heart />
+          <Comment />
+          <Share />
+          <Bookmark />
+        </div>
+
+        <Spacer y={2} />
+
+        <p className={styles.likeInfo}>1,115 likes</p>
+
+        <Spacer y={1} />
+
+        <p>
+          <span className={styles.username}>menfashion.feed</span> do what makes
+          you happy!
+        </p>
+
+        <Spacer y={0.5} />
+
+        <a href="#" className={styles.comments}>
+          View all 10 comments
+        </a>
+
+        <Spacer y={1} />
+
+        <p className={styles.dateInfo}>2 hours ago</p>
+      </div>
 
       <div className="add-new-comment"></div>
     </Box>
