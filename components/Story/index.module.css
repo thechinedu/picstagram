@@ -1,0 +1,21 @@
+.storyImageContainer {
+  border: 2px solid var(--tomato);
+  border-radius: 50%;
+  width: 65px;
+  height: 65px;
+  padding: calc(var(--spacer-1\/2) / 2);
+  margin-top: calc(var(--spacer-2) * -1);
+  margin-right: var(--spacer-2);
+}
+
+.storyImageContainer:last-of-type {
+  margin-right: 0;
+}
+
+.storyImageContainer figcaption {
+  font-size: var(--small);
+}
+
+.storyImage {
+  border-radius: 50%;
+}
