@@ -27,14 +27,15 @@ export const errorCodeToMessage = (errorCode: string) => {
 
 export { initializeApp } from "firebase/app";
 export {
-  getAuth,
   connectAuthEmulator,
   createUserWithEmailAndPassword,
+  getAuth,
   onAuthStateChanged,
   sendEmailVerification,
   signInWithEmailAndPassword,
   signOut,
   updateProfile,
 } from "firebase/auth";
+export { connectFirestoreEmulator, getFirestore } from "firebase/firestore";
 
 export type { User } from "firebase/auth";
