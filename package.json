@@ -10,7 +10,7 @@
     "test": "jest",
     "coverage": "jest --coverage",
     "e2e": "cypress open",
-    "emulator": "firebase emulators:start --only auth"
+    "emulator": "firebase emulators:start --only auth,firestore"
   },
   "dependencies": {
     "classnames": "^2.3.1",

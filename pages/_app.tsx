@@ -6,7 +6,9 @@ import { AuthProvider } from "@providers/AuthProvider";
 import {
   config,
   connectAuthEmulator,
+  connectFirestoreEmulator,
   getAuth,
+  getFirestore,
   initializeApp,
 } from "@utils/firebase";
 
@@ -16,6 +18,9 @@ initializeApp(config);
 
 if (process.env.NODE_ENV === "development") {
   const auth = getAuth();
+  const firestore = getFirestore();
+
+  connectFirestoreEmulator(firestore, "localhost", 9098);
   connectAuthEmulator(auth, "http://localhost:9099");
 }
 
