@@ -24,9 +24,9 @@ const StoryList: FC = () => {
 
   const handleScroll = () => {
     const container = mainContainerRef.current as HTMLDivElement;
-    const { scrollWidth, scrollLeft } = container;
+    const { scrollWidth, scrollLeft, offsetWidth } = container;
 
-    if (scrollWidth - scrollLeft <= SCROLL_OFFSET) setIsLastPage(true);
+    if (scrollWidth - scrollLeft <= offsetWidth) setIsLastPage(true);
     else if (scrollLeft >= 10) {
       setIsFirstPage(false);
       setIsLastPage(false);

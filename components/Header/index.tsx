@@ -7,8 +7,41 @@ import { getAuth, signOut } from "@utils/firebase";
 import cn from "classnames";
 import Image from "next/image";
 import Link from "next/link";
+import * as Dialog from "@radix-ui/react-dialog";
+import { FC, useRef, useState } from "react";
+
+type FileUploadDialogProps = {
+  open: boolean;
+};
+
+const FileUploadDialog: FC<FileUploadDialogProps> = ({ open }) => {
+  return (
+    <Dialog.Root
+      open={open}
+      onOpenChange={(open) => {
+        console.log("dialog is open:", open);
+      }}
+    >
+      <Dialog.Portal>
+        <Dialog.Overlay />
+
+        <Dialog.Content
+          aria-label="dialog-content"
+          aria-describedby="dialog-content"
+        >
+          <p>Hello</p>
+
+          <Dialog.Close />
+        </Dialog.Content>
+      </Dialog.Portal>
+    </Dialog.Root>
+  );
+};
 
 const Header = () => {
+  const inputRef = useRef<HTMLInputElement>(null);
+  const [isFileUploadDialogOpen, setIsFileUploadDialogOpen] = useState(false);
+
   const handleSignOut = async () => {
     try {
       const auth = getAuth();
@@ -16,6 +49,11 @@ const Header = () => {
     } catch (err) {
       console.log(err);
     }
+  };
+
+  const handleFileUpload = () => {
+    // inputRef.current?.click();
+    setIsFileUploadDialogOpen(true);
   };
 
   return (
@@ -38,7 +76,7 @@ const Header = () => {
         </div>
 
         <Chat />
-        <Plus />
+        <Plus onClick={handleFileUpload} />
         <Compass />
         <Heart />
         <Image
@@ -50,6 +88,15 @@ const Header = () => {
           onClick={handleSignOut}
         />
       </nav>
+
+      <input
+        type="file"
+        accept="image/*"
+        className={styles.hidden}
+        ref={inputRef}
+      />
+
+      <FileUploadDialog open={isFileUploadDialogOpen} />
     </header>
   );
 };
