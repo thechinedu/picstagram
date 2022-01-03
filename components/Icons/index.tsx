@@ -1,3 +1,4 @@
+export { default as Back } from "./Back";
 export { default as Bookmark } from "./Bookmark";
 export { default as Chat } from "./Chat";
 export { default as CircleLeft } from "./CircleLeft";

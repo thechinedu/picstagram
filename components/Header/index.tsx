@@ -1,7 +1,7 @@
 import styles from "./index.module.css";
 
 import Logo from "@components/Logo";
-import { Chat, Compass, Heart, Plus } from "@components/Icons";
+import { Back, Chat, Compass, Heart, Plus } from "@components/Icons";
 import Input from "@components/Input";
 import { getAuth, signOut } from "@utils/firebase";
 import cn from "classnames";
@@ -12,9 +12,10 @@ import { FC, useRef, useState } from "react";
 
 type FileUploadDialogProps = {
   open: boolean;
+  onClose: () => void;
 };
 
-const FileUploadDialog: FC<FileUploadDialogProps> = ({ open }) => {
+const FileUploadDialog: FC<FileUploadDialogProps> = ({ open, onClose }) => {
   return (
     <Dialog.Root
       open={open}
@@ -23,15 +24,26 @@ const FileUploadDialog: FC<FileUploadDialogProps> = ({ open }) => {
       }}
     >
       <Dialog.Portal>
-        <Dialog.Overlay />
+        <Dialog.Overlay className={styles.dialogOverlay} />
 
         <Dialog.Content
           aria-label="dialog-content"
           aria-describedby="dialog-content"
+          className={styles.dialog}
         >
-          <p>Hello</p>
+          <header className={styles.dialogHeader}>
+            <Back tabIndex={0} />
+            <Dialog.Title>Dialog title</Dialog.Title>
+            <button>Next</button>
+          </header>
 
-          <Dialog.Close />
+          <div>
+            <p>Image preview will appear here</p>
+          </div>
+
+          <Dialog.Close>
+            <button onClick={onClose}>close</button>
+          </Dialog.Close>
         </Dialog.Content>
       </Dialog.Portal>
     </Dialog.Root>
@@ -40,7 +52,7 @@ const FileUploadDialog: FC<FileUploadDialogProps> = ({ open }) => {
 
 const Header = () => {
   const inputRef = useRef<HTMLInputElement>(null);
-  const [isFileUploadDialogOpen, setIsFileUploadDialogOpen] = useState(false);
+  const [isFileUploadDialogOpen, setIsFileUploadDialogOpen] = useState(true);
 
   const handleSignOut = async () => {
     try {
@@ -54,6 +66,10 @@ const Header = () => {
   const handleFileUpload = () => {
     // inputRef.current?.click();
     setIsFileUploadDialogOpen(true);
+  };
+
+  const handleFileUploadDialogClose = () => {
+    setIsFileUploadDialogOpen(false);
   };
 
   return (
@@ -96,7 +112,10 @@ const Header = () => {
         ref={inputRef}
       />
 
-      <FileUploadDialog open={isFileUploadDialogOpen} />
+      <FileUploadDialog
+        open={isFileUploadDialogOpen}
+        onClose={handleFileUploadDialogClose}
+      />
     </header>
   );
 };
